@@ -68,10 +68,10 @@
       ? createClient(SUPABASE_URL, SUPABASE_KEY)
       : null;
 
-    document.querySelectorAll('input').forEach(input => {
-      input.addEventListener('focus', () => {
-        setTimeout(() => input.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
-      });
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    nameInput.addEventListener('focus', () => {
+      setTimeout(() => emailInput.scrollIntoView({ behavior: 'smooth', block: 'end' }), 300);
     });
 
     eventNameEl.textContent = EVENT.name;
