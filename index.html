@@ -18,7 +18,7 @@
     <video src="img/video.mov" alt="" autoplay muted loop></video>
   </div>
   <div class="info-wrapper">
-    <div class="decoration">**********************************</div>
+    <div class="decoration" aria-hidden="true"></div>
     <div class="event-meta">
       <h1 id="event-name"></h1>
       <h1 class="event-date">28.04.2026</h1>
@@ -26,7 +26,7 @@
 
     <h2 class="organizzatori-title">ORGANIZZATORI</h2>
     <ul id="speaker-list" class="speakers"></ul>
-    <div class="decoration">**********************************</div>
+    <div class="decoration" aria-hidden="true"></div>
   </div>
   <form id="registration-form">
     <label>
@@ -65,6 +65,7 @@
     const formEl = document.getElementById('registration-form');
     const statusEl = document.getElementById('status');
     const submitBtnEl = document.getElementById('submit-btn');
+    let successMessageTimeoutId = null;
 
     eventNameEl.textContent = EVENT.name;
 
@@ -78,6 +79,11 @@
 
     formEl.addEventListener('submit', async (event) => {
       event.preventDefault();
+
+      if (successMessageTimeoutId) {
+        clearTimeout(successMessageTimeoutId);
+        successMessageTimeoutId = null;
+      }
 
       const attendee_name = document.getElementById('name').value.trim().toUpperCase();
       const attendee_email = document.getElementById('email').value.trim();
@@ -116,6 +122,12 @@
 
       formEl.reset();
       statusEl.textContent = 'Iscrizione confermata.';
+
+      successMessageTimeoutId = setTimeout(() => {
+        statusEl.textContent = '';
+        successMessageTimeoutId = null;
+      }, 30000);
+      
     });
   </script>
 </body>

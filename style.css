@@ -125,6 +125,23 @@ header img {
     font-size: 64px;
     text-align: center;
 }
+
+.decoration::before {
+    content: "**********************************";
+}
+
+@media (max-width: 768px) {
+    .decoration::before {
+        content: "*************************";
+    }
+}
+
+@media (max-width: 430px) {
+    .decoration::before {
+        content: "*****************";
+    }
+}
+
 .video-wrapper {
     display: flex;
     flex-direction: row;
