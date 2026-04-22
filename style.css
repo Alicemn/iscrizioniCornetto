@@ -132,7 +132,7 @@ header img {
 
 @media (max-width: 768px) {
     .decoration::before {
-        content: "*************************";
+        content: "***************************";
     }
 }
 

@@ -6,7 +6,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 const envPath = path.join(rootDir, '.env');
-const outputPath = path.join(rootDir, 'env.js');
+const outputDir = process.env.BUILD_DIR
+  ? path.resolve(rootDir, process.env.BUILD_DIR)
+  : rootDir;
+const outputPath = path.join(outputDir, 'env.js');
 
 function parseEnv(content) {
   const values = {};
@@ -41,15 +44,20 @@ function parseEnv(content) {
 
 const fileEnv = existsSync(envPath) ? parseEnv(readFileSync(envPath, 'utf8')) : {};
 const supabaseUrl = process.env.SUPABASE_URL || fileEnv.SUPABASE_URL || '';
-const supabaseKey = process.env.SUPABASE_KEY || fileEnv.SUPABASE_KEY || '';
+const supabaseAnonKey =
+  process.env.SUPABASE_ANON_KEY ||
+  process.env.SUPABASE_KEY ||
+  fileEnv.SUPABASE_ANON_KEY ||
+  fileEnv.SUPABASE_KEY ||
+  '';
 
-if (!supabaseUrl || !supabaseKey) {
-  throw new Error('Missing SUPABASE_URL or SUPABASE_KEY in .env or process.env');
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing SUPABASE_URL or SUPABASE_ANON_KEY in .env or process.env');
 }
 
 const output = `window.APP_CONFIG = {
   SUPABASE_URL: ${JSON.stringify(supabaseUrl)},
-  SUPABASE_KEY: ${JSON.stringify(supabaseKey)}
+  SUPABASE_ANON_KEY: ${JSON.stringify(supabaseAnonKey)}
 };
 `;
 
