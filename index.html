@@ -90,6 +90,8 @@
 
     formEl.addEventListener('submit', async (event) => {
       event.preventDefault();
+      document.activeElement.blur();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
       if (successMessageTimeoutId) {
         clearTimeout(successMessageTimeoutId);
