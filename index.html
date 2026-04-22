@@ -68,6 +68,12 @@
       ? createClient(SUPABASE_URL, SUPABASE_KEY)
       : null;
 
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('focus', () => {
+        setTimeout(() => input.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+      });
+    });
+
     eventNameEl.textContent = EVENT.name;
 
     EVENT.speakers.forEach((speaker) => {
