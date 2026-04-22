@@ -70,8 +70,12 @@
 
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
+    const offset = 500; // distanza in pixel dal bordo inferiore della finestra
     nameInput.addEventListener('focus', () => {
-      setTimeout(() => emailInput.scrollIntoView({ behavior: 'smooth', block: 'end' }), 300);
+      setTimeout(() => {
+        const targetY = window.scrollY + emailInput.getBoundingClientRect().top - (window.innerHeight - offset);
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+      }, 300);
     });
 
     eventNameEl.textContent = EVENT.name;
