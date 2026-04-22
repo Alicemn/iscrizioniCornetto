@@ -55,17 +55,18 @@
 
 
 
-    const SUPABASE_URL = window.APP_CONFIG?.SUPABASE_URL || '';
-    const SUPABASE_KEY = window.APP_CONFIG?.SUPABASE_ANON_KEY || window.APP_CONFIG?.SUPABASE_KEY || '';
-
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
     const eventNameEl = document.getElementById('event-name');
     const speakerListEl = document.getElementById('speaker-list');
     const formEl = document.getElementById('registration-form');
     const statusEl = document.getElementById('status');
     const submitBtnEl = document.getElementById('submit-btn');
     let successMessageTimeoutId = null;
+
+    const SUPABASE_URL = window.APP_CONFIG?.SUPABASE_URL || '';
+    const SUPABASE_KEY = window.APP_CONFIG?.SUPABASE_ANON_KEY || window.APP_CONFIG?.SUPABASE_KEY || '';
+    const supabase = SUPABASE_URL && SUPABASE_KEY
+      ? createClient(SUPABASE_URL, SUPABASE_KEY)
+      : null;
 
     eventNameEl.textContent = EVENT.name;
 
@@ -93,7 +94,7 @@
         return;
       }
 
-      if (!SUPABASE_URL || !SUPABASE_KEY) {
+      if (!supabase) {
         statusEl.textContent = 'Configurazione Supabase mancante.';
         return;
       }

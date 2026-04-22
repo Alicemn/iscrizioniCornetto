@@ -52,7 +52,7 @@ const supabaseAnonKey =
   '';
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing SUPABASE_URL or SUPABASE_ANON_KEY in .env or process.env');
+  console.warn('Warning: SUPABASE_URL or SUPABASE_ANON_KEY is missing — env.js will have empty values');
 }
 
 const output = `window.APP_CONFIG = {
